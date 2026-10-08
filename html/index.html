@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IFCE Iventus - Sistema de Gestão de Eventos e Certificados</title>
+  <meta name="description" content="Sistema de Gestão de Eventos, Inscrições e Certificados do IFCE desenvolvido com alta fidelidade ao Figma em HTML5, CSS3 e JavaScript puro." />
+  <meta property="og:title" content="IFCE Iventus - Sistema de Gestão de Eventos" />
+  <meta property="og:description" content="Gestão completa de eventos acadêmicos, presença interativa e certificados oficiais do IFCE." />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-icon.svg" />
+
+  <!-- Folhas de Estilo Modulares em CSS3 Puro -->
+  <link rel="stylesheet" href="/css/variables.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body>
+
+  <!-- ========================================================================
+       Layout Principal do Dashboard (Participante / Professor / Admin)
+       Fiel ao Figma
+       ======================================================================== -->
+  <div class="app-container" id="dashboard-layout">
+    <!-- Backdrop para o Drawer Mobile -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- Sidebar de Navegação -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="javascript:void(0)" class="sidebar-logo" onclick="window.navigateToView('eventos')">
+          <img src="/assets/images/logo.svg" alt="iventus logo" height="40" />
+        </a>
+      </div>
+
+      <!-- Navegação Dinâmica preenchida por perfil (JS) -->
+      <nav class="sidebar-nav" id="sidebar-dynamic-nav" aria-label="Navegação Principal"></nav>
+
+      <!-- Rodapé da Sidebar com Usuário Logado -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card" onclick="window.navigateToView('perfil')" style="cursor: pointer;">
+          <img src="/assets/images/avatar-lais.svg" alt="Avatar do Usuário" class="sidebar-avatar" id="sidebar-user-avatar" />
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sidebar-user-name">Lais Holanda</div>
+            <div class="sidebar-user-role" id="sidebar-user-role">Aluno IFCE</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Área de Conteúdo Principal -->
+    <main class="app-main">
+      <!-- Header Superior -->
+      <header class="app-header">
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Abrir Menu">
+          ☰
+        </button>
+
+        <div class="header-search-container">
+          <span class="header-search-icon">🔍</span>
+          <input
+            type="search"
+            class="header-search-input"
+            id="global-search-input"
+            placeholder="Buscar eventos por título, tema ou local..."
+            aria-label="Buscar eventos"
+          />
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-primary btn-sm hidden" id="header-btn-create-event">
+            + Criar Evento
+          </button>
+
+          <span class="header-role-chip role-chip-participante" id="header-role-chip">
+            Participante
+          </span>
+
+          <!-- Dropdown do Usuário -->
+          <div class="user-profile-menu">
+            <button class="user-profile-button" id="user-profile-button" aria-haspopup="true">
+              <img src="/assets/images/avatar-lais.svg" alt="Avatar" width="28" height="28" style="border-radius: 50%;" id="header-user-avatar" />
+              <span class="user-profile-name" id="header-user-name">Lais Holanda</span>
+              <span style="font-size: 10px; color: var(--color-text-muted);">▼</span>
+            </button>
+
+            <div class="dropdown-menu" id="profile-dropdown-menu">
+              <div class="dropdown-header">
+                <div class="dropdown-user-name" id="dropdown-name">Lais Holanda</div>
+                <div class="dropdown-user-email" id="dropdown-email">lais.holanda@aluno.ifce.edu.br</div>
+              </div>
+              <a class="dropdown-item" onclick="window.navigateToView('perfil')">
+                <span>⚙️</span> Meu Perfil
+              </a>
+              <a class="dropdown-item" onclick="window.navigateToView('minhas-inscricoes')">
+                <span>📝</span> Minhas Inscrições
+              </a>
+              <a class="dropdown-item" onclick="window.navigateToView('certificados')">
+                <span>🎓</span> Certificados
+              </a>
+              <div class="dropdown-divider"></div>
+              <div style="padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">
+                Alternar Visão
+              </div>
+              <a class="dropdown-item" onclick="window.store.switchRole('participante'); window.navigateToView('eventos');">
+                <span>👤</span> Aluno / Participante
+              </a>
+              <a class="dropdown-item" onclick="window.store.switchRole('professor'); window.navigateToView('meus-eventos');">
+                <span>👨‍🏫</span> Professor / Organizador
+              </a>
+              <a class="dropdown-item" onclick="window.store.switchRole('administrador'); window.navigateToView('solicitacoes-admin');">
+                <span>🛡️</span> Administrador Geral
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item danger" onclick="window.auth.logout(); window.navigateToView('login');">
+                <span>🚪</span> Sair da Conta
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo da Página Atual (Alternado via Router JS) -->
+      <div class="app-content">
+
+        <!-- 1. Tela: Eventos (Catálogo Geral - Participante e Todos) -->
+        <section class="view-section" id="view-eventos">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Eventos</h1>
+              <p class="page-subtitle">Confira as conferências, palestras, mostras científicas e workshops abertos no IFCE</p>
+            </div>
+          </div>
+
+          <!-- Filtros de Categoria -->
+          <div class="tabs-container">
+            <button class="tab-btn category-filter-btn active" data-category="todos">Todos os Eventos</button>
+            <button class="tab-btn category-filter-btn" data-category="Tecnologia">Tecnologia</button>
+            <button class="tab-btn category-filter-btn" data-category="Inteligência Artificial">Inteligência Artificial</button>
+            <button class="tab-btn category-filter-btn" data-category="Ciência e Pesquisa">Ciência & Pesquisa</button>
+            <button class="tab-btn category-filter-btn" data-category="Robótica">Robótica & Automação</button>
+          </div>
+
+          <!-- Grid de Cards de Eventos -->
+          <div class="event-grid" id="events-grid"></div>
+        </section>
+
+        <!-- 2. Tela: Meus Eventos (Professor / Organizador & Administrador) -->
+        <section class="view-section hidden" id="view-meus-eventos">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Meus Eventos</h1>
+              <p class="page-subtitle">Gerencie os eventos acadêmicos organizados sob sua coordenação no IFCE</p>
+            </div>
+            <button class="btn btn-primary" onclick="window.adminModule.openCreateEventModal()">
+              + Criar Evento
+            </button>
+          </div>
+
+          <!-- Abas de Status -->
+          <div class="tabs-container">
+            <button class="tab-btn my-events-tab-btn active" data-tab="todos">Todos</button>
+            <button class="tab-btn my-events-tab-btn" data-tab="publicados">Publicados</button>
+            <button class="tab-btn my-events-tab-btn" data-tab="em_andamento">Em andamento</button>
+            <button class="tab-btn my-events-tab-btn" data-tab="rascunhos">Rascunhos</button>
+            <button class="tab-btn my-events-tab-btn" data-tab="concluidos">Concluídos</button>
+          </div>
+
+          <!-- Tabela de Gestão de Eventos -->
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Data</th>
+                  <th>Local</th>
+                  <th>Inscritos / Vagas</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="my-events-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. Tela: Minhas Inscrições (Participante) -->
+        <section class="view-section hidden" id="view-minhas-inscricoes">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Minhas Inscrições</h1>
+              <p class="page-subtitle">Acompanhe seus eventos confirmados, comprovantes de matrícula e QR Codes de credenciamento</p>
+            </div>
+          </div>
+
+          <div id="my-registrations-container"></div>
+        </section>
+
+        <!-- 4. Tela: Gestão de Inscrições & Presença (Professor / Organizador) -->
+        <section class="view-section hidden" id="view-gerenciar-inscricoes">
+          <div class="page-header">
+            <div>
+              <button class="btn btn-outline btn-sm" onclick="window.navigateToView('meus-eventos')" style="margin-bottom: 8px;">
+                ← Voltar para Meus Eventos
+              </button>
+              <h1 class="page-title" id="attendance-event-title">Inscrições - Semana da Computação 2024</h1>
+              <p class="page-subtitle">Controle de credenciamento, confirmação de presença e liberação de certificados</p>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" onclick="window.uiModule?.showToast('Lista de presenças exportada em CSV!', 'success')">
+              📥 Exportar Lista
+            </button>
+          </div>
+
+          <!-- Cards de Resumo Estatístico -->
+          <div class="presence-summary-bar">
+            <div class="presence-stat-card">
+              <div class="presence-stat-icon">👥</div>
+              <div>
+                <div class="presence-stat-number" id="stat-total-inscritos">0</div>
+                <div class="presence-stat-label">TOTAL INSCRITOS</div>
+              </div>
+            </div>
+            <div class="presence-stat-card">
+              <div class="presence-stat-icon" style="background: var(--color-success-bg); color: var(--color-success);">✓</div>
+              <div>
+                <div class="presence-stat-number" id="stat-presencas-confirmadas">0</div>
+                <div class="presence-stat-label">PRESENÇAS CONFIRMADAS</div>
+              </div>
+            </div>
+            <div class="presence-stat-card">
+              <div class="presence-stat-icon" style="background: var(--color-warning-bg); color: var(--color-warning);">🎓</div>
+              <div>
+                <div class="presence-stat-number" id="stat-certificados-emitidos">0</div>
+                <div class="presence-stat-label">CERTIFICADOS LIBERADOS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabela de Alunos / Checklist de Presença -->
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Participante</th>
+                  <th>Curso / Matrícula</th>
+                  <th>Presença</th>
+                  <th>Certificado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. Tela: Solicitações de Inscrição (Administrador) -->
+        <section class="view-section hidden" id="view-solicitacoes-admin">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Solicitações de Inscrição</h1>
+              <p class="page-subtitle">Análise e deferimento de pedidos de inscrição externa ou vagas suplementares</p>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Participante</th>
+                  <th>Vínculo</th>
+                  <th>Evento Solicitado</th>
+                  <th>Data do Pedido</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="pending-applications-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 6. Tela: Certificados (Participante & Administrador) -->
+        <section class="view-section hidden" id="view-certificados">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Certificados Emitidos</h1>
+              <p class="page-subtitle">Documentos com assinatura digital e autenticidade validada pelo IFCE</p>
+            </div>
+          </div>
+
+          <div id="certificates-container"></div>
+        </section>
+
+        <!-- 7. Tela: Meu Perfil e Alterar Senha -->
+        <section class="view-section hidden" id="view-perfil">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Meu Perfil</h1>
+              <p class="page-subtitle">Gerencie seus dados institucionais e configurações de segurança de acesso</p>
+            </div>
+          </div>
+
+          <!-- Abas de Perfil -->
+          <div class="tabs-container">
+            <button class="tab-btn profile-tab-btn active" data-tab="personal">Dados Pessoais</button>
+            <button class="tab-btn profile-tab-btn" data-tab="password">Alterar Senha</button>
+          </div>
+
+          <div class="profile-card">
+            <!-- Aba 1: Dados Pessoais -->
+            <div id="tab-content-personal">
+              <div class="profile-avatar-section">
+                <div class="profile-avatar-wrapper">
+                  <img src="/assets/images/avatar-lais.svg" alt="Avatar" class="profile-avatar-img" id="profile-avatar-display" />
+                  <span class="profile-avatar-badge" title="Alterar Foto">📷</span>
+                </div>
+                <div class="profile-info-header">
+                  <h2 id="profile-header-name">Lais Holanda</h2>
+                  <p id="profile-header-role">Engenharia da Computação • Campus Fortaleza</p>
+                </div>
+              </div>
+
+              <form id="form-personal-data">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label form-label-required">Nome Completo</label>
+                    <input type="text" class="form-control" name="name" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label form-label-required">E-mail Institucional</label>
+                    <input type="email" class="form-control" name="email" required />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Matrícula / SIAPE</label>
+                    <input type="text" class="form-control" name="matricula" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Curso / Departamento</label>
+                    <input type="text" class="form-control" name="curso" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Campus IFCE</label>
+                    <input type="text" class="form-control" name="campus" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Telefone de Contato</label>
+                    <input type="text" class="form-control" name="telefone" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Mini Biografia / Áreas de Interesse</label>
+                  <textarea class="form-control" name="bio" rows="3"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                  <button type="submit" class="btn btn-primary">
+                    Salvar Alterações
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Aba 2: Alterar Senha -->
+            <div id="tab-content-password" class="hidden">
+              <h3 style="font-size: 18px; margin-bottom: 6px;">Atualização de Credenciais</h3>
+              <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 20px;">
+                Para sua proteção, escolha uma senha forte com no mínimo 6 caracteres.
+              </p>
+
+              <form id="form-change-password" style="max-width: 480px;">
+                <div class="form-group">
+                  <label class="form-label form-label-required">Senha Atual</label>
+                  <input type="password" class="form-control" name="current_password" required />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label form-label-required">Nova Senha</label>
+                  <input type="password" class="form-control" name="new_password" required minlength="6" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label form-label-required">Confirmar Nova Senha</label>
+                  <input type="password" class="form-control" name="confirm_new_password" required minlength="6" />
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                  <button type="submit" class="btn btn-primary">
+                    Salvar Alteração
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       Layout de Autenticação (Login, Cadastro, Recuperar Senha, Nova Senha)
+       ======================================================================== -->
+  <div class="auth-wrapper hidden" id="auth-layout">
+
+    <!-- Tela 1: Login - Split Card (Exata do Figma 'Login - Todos') -->
+    <div class="auth-split-card auth-card-screen" id="auth-login">
+      <!-- Lado Esquerdo: Marca IFCE Iventus -->
+      <div class="auth-brand-side">
+        <div class="auth-brand-logo-large">
+          <img src="/assets/images/logo-icon.svg" alt="Ícone Iventus" class="auth-brand-icon-big" />
+          <div>
+            <h1 class="auth-brand-title">IFCE Iventus</h1>
+            <div class="auth-brand-subtitle">INSTITUTO FEDERAL DO CEARÁ</div>
+          </div>
+        </div>
+        <p style="margin-top: 24px; font-size: 13px; color: var(--color-text-secondary); max-width: 280px;">
+          Plataforma unificada de gestão de eventos, conferências acadêmicas e certificação oficial.
+        </p>
+      </div>
+
+      <!-- Lado Direito: Formulário de Entrada -->
+      <div class="auth-form-side">
+        <div class="auth-header">
+          <h2 class="auth-title">Entrar na sua conta</h2>
+          <p class="auth-description">Acesse utilizando suas credenciais institucionais</p>
+        </div>
+
+        <form id="form-auth-login">
+          <div class="form-group">
+            <label class="form-label form-label-required">E-mail Institucional ou CPF</label>
+            <input
+              type="text"
+              class="form-control"
+              name="identifier"
+              placeholder="ex: lais.holanda@aluno.ifce.edu.br"
+              value="lais.holanda@aluno.ifce.edu.br"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label form-label-required" style="margin-bottom: 0;">Senha</label>
+              <a href="javascript:void(0)" onclick="window.navigateToView('recuperar-senha')" style="font-size: 12px;">
+                Esqueceu a senha?
+              </a>
+            </div>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Digite sua senha"
+              value="123456"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-top: 12px;">
+            Entrar
+          </button>
+        </form>
+
+        <div class="auth-footer-links">
+          Não possui uma conta?
+          <a href="javascript:void(0)" onclick="window.navigateToView('cadastro')">Cadastre-se</a>
+        </div>
+
+        <!-- Demonstração rápida de perfis -->
+        <details class="demo-credentials-box">
+          <summary>💡 Acesso rápido para teste de perfis</summary>
+          <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+            <button class="btn btn-outline btn-sm" onclick="window.auth.login('lais.holanda@aluno.ifce.edu.br', '123'); window.navigateToView('eventos');">
+              Entrar como Participante (Lais)
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="window.auth.login('roberto.alves@ifce.edu.br', '123'); window.navigateToView('meus-eventos');">
+              Entrar como Professor (Roberto)
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="window.auth.login('carlos.gestao@ifce.edu.br', '123'); window.navigateToView('solicitacoes-admin');">
+              Entrar como Administrador (Carlos)
+            </button>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Tela 2: Cadastro - Todos -->
+    <div class="auth-single-card auth-card-screen hidden" id="auth-cadastro">
+      <div class="text-center" style="margin-bottom: 20px;">
+        <img src="/assets/images/logo-icon.svg" alt="Logo" width="54" height="54" style="margin: 0 auto 12px;" />
+        <h2 class="auth-title">Criar sua conta</h2>
+        <p class="auth-description">Cadastre-se para participar dos eventos do IFCE</p>
+      </div>
+
+      <form id="form-auth-register">
+        <div class="form-group">
+          <label class="form-label form-label-required">Nome Completo</label>
+          <input type="text" class="form-control" name="name" placeholder="Seu nome completo" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label form-label-required">E-mail Institucional</label>
+            <input type="email" class="form-control" name="email" placeholder="nome@ifce.edu.br" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Matrícula / SIAPE</label>
+            <input type="text" class="form-control" name="matricula" placeholder="ex: 2024100123" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label-required">Tipo de Perfil</label>
+          <select class="form-control" name="role" required>
+            <option value="participante">Aluno / Participante Geral</option>
+            <option value="professor">Professor / Coordenador de Evento</option>
+            <option value="administrador">Administrador Geral</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label form-label-required">Senha</label>
+            <input type="password" class="form-control" name="password" placeholder="Mínimo 6 caracteres" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label class="form-label form-label-required">Confirmar senha</label>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Repita a senha" required minlength="6" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin: 12px 0;">
+          <label class="form-checkbox-label">
+            <input type="checkbox" class="form-checkbox" required checked />
+            <span>Li e concordo com os Termos de Uso e Política de Privacidade do IFCE</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg">
+          Cadastrar
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        Já possui uma conta?
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')">Entrar</a>
+      </div>
+    </div>
+
+    <!-- Tela 3: Recuperar Senha - Todos -->
+    <div class="auth-single-card auth-card-screen hidden" id="auth-recuperar-senha">
+      <div class="text-center" style="margin-bottom: 24px;">
+        <div class="auth-logo-badge" style="margin: 0 auto 16px;">🔑</div>
+        <h2 class="auth-title">Recuperar senha</h2>
+        <p class="auth-description">
+          Informe seu e-mail cadastrado para receber o link de redefinição de acesso.
+        </p>
+      </div>
+
+      <form id="form-auth-recover">
+        <div class="form-group">
+          <label class="form-label form-label-required">E-mail institucional</label>
+          <input type="email" class="form-control" name="email" placeholder="ex: lais.holanda@aluno.ifce.edu.br" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-top: 12px;">
+          Enviar link de recuperação
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')">← Voltar ao login</a>
+      </div>
+    </div>
+
+    <!-- Tela 4: Nova Senha - Todos -->
+    <div class="auth-single-card auth-card-screen hidden" id="auth-nova-senha">
+      <div class="text-center" style="margin-bottom: 24px;">
+        <div class="auth-logo-badge" style="margin: 0 auto 16px; background-color: var(--color-success);">🛡️</div>
+        <h2 class="auth-title">Criação de nova senha</h2>
+        <p class="auth-description">Defina sua nova senha para reestabelecer seu acesso</p>
+      </div>
+
+      <form id="form-auth-reset">
+        <div class="form-group">
+          <label class="form-label form-label-required">Nova senha</label>
+          <input type="password" class="form-control" name="new_password" placeholder="Mínimo 6 caracteres" required minlength="6" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label-required">Confirmar nova senha</label>
+          <input type="password" class="form-control" name="confirm_password" placeholder="Repita a nova senha" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-top: 12px;">
+          Salvar nova senha
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')">← Voltar ao login</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================================================
+       Modais do Sistema
+       ======================================================================== -->
+
+  <!-- Modal 1: Visualizando Evento -->
+  <div class="modal-overlay" id="modal-view-event" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="view-modal-title">Detalhes do Evento</h3>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body" id="view-modal-body"></div>
+      <div class="modal-footer" id="view-modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Criando Evento (Cabeçalho Verde - Professor & Administrador) -->
+  <div class="modal-overlay" id="modal-create-event" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header modal-header-green">
+        <h3 class="modal-title">Criando Evento</h3>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" aria-label="Fechar">&times;</button>
+      </div>
+
+      <form id="form-create-event">
+        <div class="modal-body">
+          <div class="modal-event-layout">
+            <!-- Coluna Esquerda: Imagem -->
+            <div>
+              <label class="form-label">Imagem do Evento</label>
+              <div class="modal-image-upload-box">
+                <img src="/assets/images/event-comp.svg" alt="Preview" class="image-preview-element" id="create-image-preview" />
+                <span style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px;">Capa do Evento</span>
+              </div>
+            </div>
+
+            <!-- Coluna Direita: Campos -->
+            <div>
+              <div class="form-group">
+                <label class="form-label form-label-required">Nome do Evento</label>
+                <input type="text" class="form-control" name="title" placeholder="ex: Semana da Computação 2024" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label form-label-required">Categoria</label>
+                  <select class="form-control" name="category" required>
+                    <option value="Tecnologia">Tecnologia</option>
+                    <option value="Inteligência Artificial">Inteligência Artificial</option>
+                    <option value="Ciência e Pesquisa">Ciência e Pesquisa</option>
+                    <option value="Robótica">Robótica</option>
+                    <option value="Engenharia">Engenharia</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label form-label-required">Local</label>
+                  <input type="text" class="form-control" name="location" placeholder="ex: Auditório Central" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label form-label-required">Data de Início</label>
+                  <input type="date" class="form-control" name="dateStart" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Data de Término</label>
+                  <input type="date" class="form-control" name="dateEnd" />
+                </div>
+              </div>
+
+              <div class="form-row-3">
+                <div class="form-group">
+                  <label class="form-label">Horário</label>
+                  <input type="text" class="form-control" name="timeLabel" placeholder="08:00h - 18:00h" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Carga Horária (h)</label>
+                  <input type="number" class="form-control" name="workload" placeholder="40" min="1" value="20" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Limite de Vagas</label>
+                  <input type="number" class="form-control" name="totalSeats" placeholder="100" min="1" value="50" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Status Inicial</label>
+                <select class="form-control" name="status">
+                  <option value="publicado">Publicado (Inscrições Abertas)</option>
+                  <option value="rascunho">Salvar como Rascunho</option>
+                  <option value="em_andamento">Em andamento</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Descrição do Evento</label>
+                <textarea class="form-control" name="description" rows="3" placeholder="Detalhes, palestrantes, tópicos e objetivos..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.closeAnyModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Criar e Salvar Evento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Editando Evento (Cabeçalho Amarelo Exato do Figma!) -->
+  <div class="modal-overlay" id="modal-edit-event" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header modal-header-yellow">
+        <h3 class="modal-title">Editando Evento</h3>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" aria-label="Fechar">&times;</button>
+      </div>
+
+      <form id="form-edit-event">
+        <input type="hidden" name="id" />
+
+        <div class="modal-body">
+          <div class="modal-event-layout">
+            <!-- Imagem -->
+            <div>
+              <label class="form-label">Imagem do Evento</label>
+              <div class="modal-image-upload-box">
+                <img src="/assets/images/event-comp.svg" alt="Preview" class="image-preview-element" id="edit-image-preview" />
+                <span style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px;">Capa Atual</span>
+              </div>
+            </div>
+
+            <!-- Campos -->
+            <div>
+              <div class="form-group">
+                <label class="form-label form-label-required">Nome do Evento</label>
+                <input type="text" class="form-control" name="title" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Categoria</label>
+                  <select class="form-control" name="category">
+                    <option value="Tecnologia">Tecnologia</option>
+                    <option value="Inteligência Artificial">Inteligência Artificial</option>
+                    <option value="Ciência e Pesquisa">Ciência e Pesquisa</option>
+                    <option value="Robótica">Robótica</option>
+                    <option value="Engenharia">Engenharia</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Local</label>
+                  <input type="text" class="form-control" name="location" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Data de Início</label>
+                  <input type="date" class="form-control" name="dateStart" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Data de Término</label>
+                  <input type="date" class="form-control" name="dateEnd" />
+                </div>
+              </div>
+
+              <div class="form-row-3">
+                <div class="form-group">
+                  <label class="form-label">Horário</label>
+                  <input type="text" class="form-control" name="timeLabel" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Carga Horária (h)</label>
+                  <input type="number" class="form-control" name="workload" min="1" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Limite de Vagas</label>
+                  <input type="number" class="form-control" name="totalSeats" min="1" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Status do Evento</label>
+                <select class="form-control" name="status">
+                  <option value="publicado">Publicado</option>
+                  <option value="em_andamento">Em andamento</option>
+                  <option value="rascunho">Rascunho</option>
+                  <option value="encerrado">Encerrado</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Descrição do Evento</label>
+                <textarea class="form-control" name="description" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.closeAnyModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Visualizador de Certificado Acadêmico Oficial IFCE -->
+  <div class="modal-overlay" id="modal-certificate-viewer" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 860px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Certificado Acadêmico IFCE</h3>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body" id="certificate-modal-body"></div>
+      <div class="modal-footer" id="certificate-modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Comprovante de Inscrição com QR Code -->
+  <div class="modal-overlay" id="modal-ticket-viewer" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Comprovante de Inscrição</h3>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body" id="ticket-modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary w-full" onclick="window.closeAnyModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Notificações Toast -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Script Principal em JavaScript Puro (ES Modules) -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

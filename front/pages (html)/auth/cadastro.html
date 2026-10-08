@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - IFCE Iventus</title>
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/auth/cadastro.css">
+</head>
+<body class="cadastro-body">
+  <div class="auth-container cadastro-card">
+    <div class="logo-header text-center">
+      <img src="../../assets/css/images/logo.svg" alt="Logo IFCE Iventus" class="form-logo">
+    </div>
+
+    <h2>Criar sua conta</h2>
+    <form id="cadastroForm">
+      <div class="form-group">
+        <label for="fullName">Nome completo</label>
+        <input type="text" id="fullName" class="form-control" placeholder="Luiz Thomas Marte Moreira" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" class="form-control" placeholder="luiz.thomas@gmail.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="profile">Perfil</label>
+        <select id="profile" class="form-control" required>
+          <option value="Participante">Participante</option>
+          <option value="Professor">Professor / Organizador</option>
+          <option value="Administrador">Administrador</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar senha</label>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">
+          Li e aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary">Cadastrar</button>
+
+      <div class="auth-links text-center">
+        <p>Já possui uma conta? <a href="login.html">Entrar</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script src="../../js/pages/auth/cadastro.js"></script>
+</body>
+</html>

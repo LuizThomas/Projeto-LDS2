@@ -1,0 +1,496 @@
+{
+  "usuario": [
+    {
+      "id_usuario": 1,
+      "nome": "Luiz Thomas Marte Moreira",
+      "email": "luiz.thomas@gmail.com",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "123456789101112",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": "/assets/images/avatar-lais.svg",
+      "telefone": "(88) 99999-9999",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 2,
+      "nome": "Saulo Bezerra",
+      "email": "saulo_bezerra@gmail.com",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOFSoJW.IYC.VfEnc2nUsADQge.I.ZLzm",
+      "matricula": "SIAPE 2849102",
+      "perfil": "PROFESSOR",
+      "foto_perfil": "/assets/images/avatar-prof.svg",
+      "telefone": "(88) 96798-1099",
+      "materias": "LDS ARQM",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 3,
+      "nome": "Administrador IFCE",
+      "email": "admin@ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOywo0QfCsxLRg9Uyxu1F30qymsIzOMOO",
+      "matricula": "SIAPE 1002003",
+      "perfil": "ADMINISTRADOR",
+      "foto_perfil": "/assets/images/avatar-admin.svg",
+      "telefone": "(88) 3582-1000",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 4,
+      "nome": "Ana Beatriz Souza",
+      "email": "ana.souza@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101001",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-1111",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 5,
+      "nome": "Ana Lívia Pinheiro Vieira",
+      "email": "ana.livia@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101002",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-2222",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 6,
+      "nome": "Camilo Marquez",
+      "email": "camilo.marquez@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101003",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-3333",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 7,
+      "nome": "Danilo Torres Matos",
+      "email": "danilo.matos@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101004",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-4444",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 8,
+      "nome": "Gabriel da Silva",
+      "email": "gabriel.silva@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101005",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-5555",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 9,
+      "nome": "Gabriela Oliveira Ferreira",
+      "email": "gabriela.ferreira@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101006",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-6666",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_usuario": 10,
+      "nome": "João Felipe Gonçalves Diniz",
+      "email": "joao.diniz@aluno.ifce.edu.br",
+      "senha_hash": "$2b$10$KbCzYcC/DO/m4I9qo1TZlOEYDCqMYm/UW2c5L.Z/TfYpGrX4h2mwm",
+      "matricula": "2024101007",
+      "perfil": "PARTICIPANTE",
+      "foto_perfil": null,
+      "telefone": "(88) 99101-7777",
+      "materias": null,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    }
+  ],
+  "evento": [
+    {
+      "id_evento": 1,
+      "id_organizador": 2,
+      "titulo": "Semana da Computação 2024 - IFCE",
+      "descricao": "Ciclo anual de palestras técnicas, maratona de programação, inovação tecnológica e inteligência artificial no IFCE Campus Cedro.",
+      "banner_url": "/assets/images/event-comp.svg",
+      "local": "Campus Cedro - IFCE",
+      "horario": "08:00h - 18:00h",
+      "modalidade": "Presencial",
+      "data_inicio": "2026-11-16T08:00:00.000Z",
+      "data_fim": "2026-11-18T18:00:00.000Z",
+      "inicio_inscricoes": "2026-01-01T00:00:00.000Z",
+      "fim_inscricoes": "2026-12-31T23:59:59.000Z",
+      "status": "PUBLICADO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_evento": 2,
+      "id_organizador": 2,
+      "titulo": "Workshop de IA",
+      "descricao": "Treinamento prático sobre modelos generativos, redes neurais e processamento de linguagem natural aplicados à educação e indústria.",
+      "banner_url": "/assets/images/event-ai.svg",
+      "local": "Online",
+      "horario": "14:00h - 18:00h",
+      "modalidade": "Online",
+      "data_inicio": "2024-05-20T14:00:00.000Z",
+      "data_fim": "2024-05-20T18:00:00.000Z",
+      "inicio_inscricoes": "2024-04-10T00:00:00.000Z",
+      "fim_inscricoes": "2024-05-19T23:59:59.000Z",
+      "status": "CANCELADO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_evento": 3,
+      "id_organizador": 2,
+      "titulo": "Mostra Científica IFCE",
+      "descricao": "Apresentação de trabalhos acadêmicos, banners, artigos científicos e projetos de extensão desenvolvidos pelos estudantes de tecnologia.",
+      "banner_url": "/assets/images/event-science.svg",
+      "local": "Campus Cedro - IFCE",
+      "horario": "13:00h - 15:00h",
+      "modalidade": "Presencial",
+      "data_inicio": "2026-12-05T13:00:00.000Z",
+      "data_fim": "2026-12-05T17:00:00.000Z",
+      "inicio_inscricoes": "2026-01-01T00:00:00.000Z",
+      "fim_inscricoes": "2026-12-31T23:59:59.000Z",
+      "status": "PUBLICADO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_evento": 4,
+      "id_organizador": 2,
+      "titulo": "Palestra Inovação e Tecnologia",
+      "descricao": "Debate de vanguarda sobre mercado tech no Ceará, oportunidades para desenvolvedores juniores e tendências de computação em nuvem.",
+      "banner_url": "/assets/images/event-comp.svg",
+      "local": "Campus Cedro - IFCE",
+      "horario": "09:00h - 12:00h",
+      "modalidade": "Online",
+      "data_inicio": "2026-12-10T09:00:00.000Z",
+      "data_fim": "2026-12-10T12:00:00.000Z",
+      "inicio_inscricoes": "2026-01-01T00:00:00.000Z",
+      "fim_inscricoes": "2026-12-31T23:59:59.000Z",
+      "status": "RASCUNHO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_evento": 5,
+      "id_organizador": 2,
+      "titulo": "Minicurso de Python",
+      "descricao": "Fundamentos da linguagem Python, bibliotecas científicas NumPy e Pandas, além de automação de tarefas acadêmicas.",
+      "banner_url": "/assets/images/event-robotics.svg",
+      "local": "Online",
+      "horario": "19:00h - 22:00h",
+      "modalidade": "Online",
+      "data_inicio": "2026-12-12T19:00:00.000Z",
+      "data_fim": "2026-12-12T22:00:00.000Z",
+      "inicio_inscricoes": "2026-01-01T00:00:00.000Z",
+      "fim_inscricoes": "2026-12-31T23:59:59.000Z",
+      "status": "PUBLICADO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_evento": 6,
+      "id_organizador": 2,
+      "titulo": "Simpósio de Pesquisa",
+      "descricao": "Simpósio anual de iniciação científica e tecnológica reunindo pesquisadores e alunos de graduação e técnico do IFCE.",
+      "banner_url": "/assets/images/event-science.svg",
+      "local": "Campus Cedro - IFCE",
+      "horario": "08:00h - 17:00h",
+      "modalidade": "Presencial",
+      "data_inicio": "2024-06-15T08:00:00.000Z",
+      "data_fim": "2024-06-15T17:00:00.000Z",
+      "inicio_inscricoes": "2024-05-25T00:00:00.000Z",
+      "fim_inscricoes": "2024-06-14T23:59:59.000Z",
+      "status": "ENCERRADO",
+      "created_at": "2026-10-08T13:13:02.579Z"
+    }
+  ],
+  "atividade": [
+    {
+      "id_atividade": 1,
+      "id_evento": 1,
+      "titulo": "Semana da Computação 2024 - Geral",
+      "descricao": "Acesso integral à programação e palestras do evento.",
+      "tipo": "Geral",
+      "data_hora_inicio": "2024-05-16T08:00:00.000Z",
+      "data_hora_fim": "2024-05-18T18:00:00.000Z",
+      "local": "Auditório Central Campus Cedro",
+      "limite_vagas": 150,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_atividade": 2,
+      "id_evento": 2,
+      "titulo": "Workshop de IA - Sessão Prática",
+      "descricao": "Mão na massa construindo pipelines com embeddings.",
+      "tipo": "Workshop",
+      "data_hora_inicio": "2024-05-20T14:00:00.000Z",
+      "data_hora_fim": "2024-05-20T18:00:00.000Z",
+      "local": "Google Meet",
+      "limite_vagas": 60,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_atividade": 3,
+      "id_evento": 3,
+      "titulo": "Mostra Científica IFCE - Apresentações",
+      "descricao": "Apresentação pública de artigos e projetos.",
+      "tipo": "Mostra",
+      "data_hora_inicio": "2024-06-05T13:00:00.000Z",
+      "data_hora_fim": "2024-06-05T17:00:00.000Z",
+      "local": "Hall de Entrada Campus Cedro",
+      "limite_vagas": 100,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_atividade": 4,
+      "id_evento": 4,
+      "titulo": "Palestra Inovação e Tecnologia",
+      "descricao": "Palestra com especialistas do Polo de Inovação.",
+      "tipo": "Palestra",
+      "data_hora_inicio": "2024-06-10T09:00:00.000Z",
+      "data_hora_fim": "2024-06-10T12:00:00.000Z",
+      "local": "Auditório 2",
+      "limite_vagas": 80,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_atividade": 5,
+      "id_evento": 5,
+      "titulo": "Minicurso de Python Intensivo",
+      "descricao": "Capacitação prática com exercícios.",
+      "tipo": "Minicurso",
+      "data_hora_inicio": "2024-06-12T19:00:00.000Z",
+      "data_hora_fim": "2024-06-12T22:00:00.000Z",
+      "local": "Laboratório de Informática 3",
+      "limite_vagas": 40,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    },
+    {
+      "id_atividade": 6,
+      "id_evento": 6,
+      "titulo": "Simpósio de Pesquisa - Sessão Plenária",
+      "descricao": "Abertura e debates científicos.",
+      "tipo": "Simpósio",
+      "data_hora_inicio": "2024-06-15T08:00:00.000Z",
+      "data_hora_fim": "2024-06-15T17:00:00.000Z",
+      "local": "Auditório Central",
+      "limite_vagas": 120,
+      "created_at": "2026-10-08T13:13:02.579Z"
+    }
+  ],
+  "inscricao": [
+    {
+      "id_inscricao": 1,
+      "id_usuario": 4,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-05T10:00:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 2,
+      "id_usuario": 5,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-05T10:15:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 3,
+      "id_usuario": 6,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-06T11:00:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 4,
+      "id_usuario": 7,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-06T14:30:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 5,
+      "id_usuario": 8,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-07T09:20:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 6,
+      "id_usuario": 9,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-07T15:45:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 7,
+      "id_usuario": 10,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-08T08:10:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 8,
+      "id_usuario": 1,
+      "id_atividade": 1,
+      "data_inscricao": "2024-04-02T14:00:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 9,
+      "id_usuario": 1,
+      "id_atividade": 3,
+      "data_inscricao": "2024-05-10T11:00:00.000Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 10,
+      "id_usuario": 4,
+      "id_atividade": 5,
+      "data_inscricao": "2026-10-08T13:38:25.452Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 11,
+      "id_usuario": 2,
+      "id_atividade": 1,
+      "data_inscricao": "2026-10-08T13:39:48.534Z",
+      "status": "CONFIRMADA"
+    },
+    {
+      "id_inscricao": 12,
+      "id_usuario": 1,
+      "id_atividade": 5,
+      "data_inscricao": "2026-10-08T13:52:35.411Z",
+      "status": "CONFIRMADA"
+    }
+  ],
+  "frequencia": [
+    {
+      "id_frequencia": 1,
+      "id_inscricao": 1,
+      "presente": true,
+      "data_registro": "2026-10-08T13:51:51.136Z"
+    },
+    {
+      "id_frequencia": 2,
+      "id_inscricao": 2,
+      "presente": true,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 3,
+      "id_inscricao": 3,
+      "presente": false,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 4,
+      "id_inscricao": 4,
+      "presente": false,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 5,
+      "id_inscricao": 5,
+      "presente": true,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 6,
+      "id_inscricao": 6,
+      "presente": false,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 7,
+      "id_inscricao": 7,
+      "presente": true,
+      "data_registro": "2024-05-16T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 8,
+      "id_inscricao": 8,
+      "presente": true,
+      "data_registro": "2026-10-08T13:13:02.780Z"
+    },
+    {
+      "id_frequencia": 9,
+      "id_inscricao": 9,
+      "presente": true,
+      "data_registro": "2024-06-05T18:00:00.000Z"
+    },
+    {
+      "id_frequencia": 10,
+      "id_inscricao": 10,
+      "presente": false,
+      "data_registro": "2026-10-08T13:38:25.452Z"
+    },
+    {
+      "id_frequencia": 11,
+      "id_inscricao": 11,
+      "presente": false,
+      "data_registro": "2026-10-08T13:39:48.534Z"
+    },
+    {
+      "id_frequencia": 12,
+      "id_inscricao": 12,
+      "presente": false,
+      "data_registro": "2026-10-08T13:52:35.411Z"
+    }
+  ],
+  "certificado": [
+    {
+      "id_certificado": 1,
+      "id_frequencia": 1,
+      "codigo_validacao": "IFCE-CERT-2024-COMP-ABS01",
+      "data_emissao": "2024-05-19T10:00:00.000Z"
+    },
+    {
+      "id_certificado": 2,
+      "id_frequencia": 2,
+      "codigo_validacao": "IFCE-CERT-2024-COMP-ALV02",
+      "data_emissao": "2024-05-19T10:00:00.000Z"
+    },
+    {
+      "id_certificado": 3,
+      "id_frequencia": 5,
+      "codigo_validacao": "IFCE-CERT-2024-COMP-GDS03",
+      "data_emissao": "2024-05-19T10:00:00.000Z"
+    },
+    {
+      "id_certificado": 4,
+      "id_frequencia": 7,
+      "codigo_validacao": "IFCE-CERT-2024-COMP-JFD04",
+      "data_emissao": "2024-05-19T10:00:00.000Z"
+    },
+    {
+      "id_certificado": 5,
+      "id_frequencia": 8,
+      "codigo_validacao": "IFCE-CERT-2024-COMP-LTM08",
+      "data_emissao": "2024-05-19T10:00:00.000Z"
+    }
+  ],
+  "counters": {
+    "usuario": 10,
+    "evento": 6,
+    "atividade": 6,
+    "inscricao": 12,
+    "frequencia": 12,
+    "certificado": 5
+  }
+}

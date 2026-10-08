@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IFCE Iventus</title>
+  <meta name="description" content="Sistema de gestão de eventos científicos, controle de inscrições, frequência e certificados acadêmicos do IFCE." />
+  <meta property="og:title" content="IFCE Iventus" />
+  <meta property="og:description" content="Sistema de gestão de eventos científicos, controle de inscrições, frequência e certificados acadêmicos do IFCE." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-icon.svg" />
+
+  <!-- Folhas de Estilo do IFCE Iventus fiéis ao Figma -->
+  <link rel="stylesheet" href="/css/variables.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body>
+  <!-- ========================================================================
+       Layout Principal do Dashboard (Participante / Professor / Admin)
+       Fiel às Telas do Figma
+       ======================================================================== -->
+  <div class="app-container" id="dashboard-layout">
+    <!-- Backdrop para o Drawer Mobile -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- Sidebar de Navegação -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="javascript:void(0)" class="sidebar-logo" onclick="window.navigateToView('eventos')">
+          <img src="/assets/images/logo.svg" alt="iventus logo" height="38" />
+        </a>
+      </div>
+
+      <!-- Navegação Dinâmica conforme Perfil (Figma) -->
+      <nav class="sidebar-nav" id="sidebar-dynamic-nav" aria-label="Navegação Principal"></nav>
+
+      <!-- Rodapé da Sidebar com Usuário Logado -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card" onclick="window.navigateToView('perfil')" style="cursor: pointer;">
+          <img src="/assets/images/avatar-lais.svg" alt="Avatar do Usuário" class="sidebar-avatar" id="sidebar-user-avatar" />
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sidebar-user-name">Luiz Thomas</div>
+            <div class="sidebar-user-role" id="sidebar-user-role">Participante</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Área de Conteúdo Principal -->
+    <main class="app-main">
+      <!-- Header Superior com Busca e Perfil -->
+      <header class="app-header">
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Abrir Menu">
+          ☰
+        </button>
+
+        <!-- Barra de Busca Centralizada conforme Figma -->
+        <div class="header-search-container" style="max-width: 480px; width: 100%;">
+          <span class="header-search-icon">🔍</span>
+          <input
+            type="search"
+            class="header-search-input"
+            id="global-search-input"
+            placeholder="Pesquisar eventos..."
+            aria-label="Pesquisar eventos"
+            style="border-radius: 9999px; background-color: #F1F5F9; border: 1px solid #E2E8F0;"
+          />
+        </div>
+
+        <div class="header-actions">
+          <!-- Botão Criar Evento (Apenas Professor/Admin) -->
+          <button class="btn btn-primary btn-sm hidden" id="header-btn-create-event" style="background-color: #16A34A; border-radius: 8px;">
+            + Criar Evento
+          </button>
+
+          <!-- Dropdown do Usuário Logado (Figma) -->
+          <div class="user-profile-menu">
+            <button class="user-profile-button" id="user-profile-button" aria-haspopup="true" style="background: transparent; border: none; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+              <img src="/assets/images/avatar-lais.svg" alt="Avatar" width="34" height="34" style="border-radius: 50%; object-fit: cover;" id="header-user-avatar" />
+              <div style="text-align: left; display: flex; flex-direction: column;">
+                <span class="user-profile-name" id="header-user-name" style="font-weight: 700; font-size: 13px; color: #0F172A;">Luiz Thomas</span>
+                <span id="header-user-role-label" style="font-size: 11px; color: #64748B;">Participante</span>
+              </div>
+            </button>
+
+            <!-- Menu Dropdown para alternar perfis e logout -->
+            <div class="dropdown-menu" id="profile-dropdown-menu">
+              <div class="dropdown-header">
+                <div class="dropdown-user-name" id="dropdown-name">Luiz Thomas</div>
+                <div class="dropdown-user-email" id="dropdown-email">luiz.thomas@gmail.com</div>
+              </div>
+              <a class="dropdown-item" onclick="window.navigateToView('perfil')">
+                <span>⚙️</span> Meu Perfil
+              </a>
+              <a class="dropdown-item" onclick="window.navigateToView('minhas-inscricoes')">
+                <span>🎟️</span> Minhas Inscrições
+              </a>
+              <a class="dropdown-item" onclick="window.navigateToView('certificados')">
+                <span>🎗️</span> Meus Certificados
+              </a>
+              <div class="dropdown-divider"></div>
+              <div style="padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">
+                Alternar Visão (Teste TCC)
+              </div>
+              <a class="dropdown-item" onclick="window.switchProfile('participante');">
+                <span>👤</span> Luiz Thomas (Participante)
+              </a>
+              <a class="dropdown-item" onclick="window.switchProfile('professor');">
+                <span>👨‍🏫</span> Saulo Bezerra (Professor / Org)
+              </a>
+              <a class="dropdown-item" onclick="window.switchProfile('administrador');">
+                <span>🛡️</span> Administrador IFCE
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item danger" onclick="window.auth.logout(); window.navigateToView('login');">
+                <span>🚪</span> Sair da Conta
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo da Aplicação -->
+      <div class="app-content" style="padding: 24px 32px;">
+
+        <!-- ====================================================================
+             1. Tela: Eventos (Figma: Eventos - Participante.png)
+             ==================================================================== -->
+        <section class="view-section" id="view-eventos">
+          <div class="page-header" style="margin-bottom: 24px;">
+            <div>
+              <h1 class="page-title" style="font-size: 26px; font-weight: 800; color: #0F172A;">Eventos</h1>
+            </div>
+          </div>
+          <!-- Grid com 3 Colunas dos Cards de Eventos -->
+          <div class="event-grid" id="events-grid"></div>
+        </section>
+
+        <!-- ====================================================================
+             2. Tela: Minhas Inscrições (Figma: Inscrições - Participante.png)
+             ==================================================================== -->
+        <section class="view-section hidden" id="view-minhas-inscricoes">
+          <div class="page-header" style="margin-bottom: 24px;">
+            <div>
+              <h1 class="page-title" style="font-size: 26px; font-weight: 800; color: #0F172A;">Minhas Inscrições</h1>
+            </div>
+          </div>
+          <div id="my-registrations-container"></div>
+        </section>
+
+        <!-- ====================================================================
+             3. Tela: Meus Certificados (Figma: Certificados - Participante.png)
+             ==================================================================== -->
+        <section class="view-section hidden" id="view-certificados">
+          <div class="page-header" style="margin-bottom: 24px;">
+            <div>
+              <h1 class="page-title" style="font-size: 26px; font-weight: 800; color: #0F172A;">Meus certificados</h1>
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0; padding: 8px 16px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="font-weight: 700; color: #64748B;">Evento</th>
+                  <th style="font-weight: 700; color: #64748B;">Data</th>
+                  <th style="font-weight: 700; color: #64748B;">Carga Horária</th>
+                  <th style="font-weight: 700; color: #64748B;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="certificates-table-body"></tbody>
+            </table>
+            <div style="text-align: center; padding: 16px 0;">
+              <a href="javascript:void(0)" onclick="window.eventsModule.renderCertificatesTable()" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+                Ver mais
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             4. Tela: Meu Perfil (Figma: Perfil - Participante.png & Perfil - Professor.png)
+             ==================================================================== -->
+        <section class="view-section hidden" id="view-perfil">
+          <div class="page-header" style="margin-bottom: 20px;">
+            <div>
+              <h1 class="page-title" style="font-size: 26px; font-weight: 800; color: #0F172A;">Meu perfil</h1>
+            </div>
+          </div>
+
+          <div class="profile-card" style="background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0; padding: 24px;">
+            <!-- Abas com sublinhado verde exato do Figma -->
+            <div style="display: flex; gap: 24px; border-bottom: 1px solid #E2E8F0; margin-bottom: 28px;">
+              <button class="profile-tab-btn active" data-tab="personal" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 700; color: #16A34A; border-bottom: 2px solid #16A34A; cursor: pointer;">
+                Dados pessoais
+              </button>
+              <button class="profile-tab-btn" data-tab="password" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;">
+                Alterar senha
+              </button>
+            </div>
+
+            <!-- Aba 1: Dados Pessoais (com Foto e Campos) -->
+            <div id="tab-content-personal">
+              <div style="display: grid; grid-template-columns: 200px 1fr; gap: 32px;">
+                <!-- Coluna da Foto -->
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 10px;">
+                  <div style="width: 140px; height: 140px; border-radius: 50%; background-color: #F1F5F9; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 12px; border: 1px solid #E2E8F0;">
+                    <img src="/assets/images/avatar-lais.svg" alt="Avatar" id="profile-avatar-display" style="width: 100%; height: 100%; object-fit: cover;" />
+                  </div>
+                  <!-- Input invisível para upload real de foto -->
+                  <input type="file" id="profile-file-input" accept="image/*" style="display: none;" onchange="window.profileModule.handlePhotoUpload(this.files[0])" />
+                  <a href="javascript:void(0)" onclick="document.getElementById('profile-file-input').click()" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+                    Alterar foto
+                  </a>
+                </div>
+
+                <!-- Coluna do Formulário -->
+                <div>
+                  <form id="form-personal-data">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                      <label class="form-label" style="font-weight: 600;">Nome completo</label>
+                      <input type="text" class="form-control" name="name" required />
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 16px;">
+                      <label class="form-label" style="font-weight: 600;">E-mail</label>
+                      <input type="email" class="form-control" name="email" required />
+                    </div>
+
+                    <!-- Campo Dinâmico: Matrícula para Participante -->
+                    <div class="form-group" id="field-matricula-wrap" style="margin-bottom: 16px;">
+                      <label class="form-label" style="font-weight: 600;">Matrícula (Caso for estudante da instituição)</label>
+                      <input type="text" class="form-control" name="matricula" />
+                    </div>
+
+                    <!-- Campo Dinâmico: Responsável por Matérias para Professor -->
+                    <div class="form-group hidden" id="field-materias-wrap" style="margin-bottom: 16px;">
+                      <label class="form-label" style="font-weight: 600;">Responsável por Matérias</label>
+                      <input type="text" class="form-control" name="materias" placeholder="ex: LDS ARQM" />
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 24px;">
+                      <label class="form-label" style="font-weight: 600;">Telefone</label>
+                      <input type="text" class="form-control" name="telefone" />
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end;">
+                      <button type="submit" class="btn btn-primary" style="background-color: #16A34A; padding: 10px 24px; border-radius: 8px; font-weight: 700;">
+                        Salvar alterações
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aba 2: Alterar Senha (Figma: Alterar Senha - Participante.png) -->
+            <div id="tab-content-password" class="hidden">
+              <form id="form-change-password" style="max-width: 560px;">
+                <div class="form-group" style="margin-bottom: 16px;">
+                  <label class="form-label" style="font-weight: 600;">Senha atual</label>
+                  <input type="password" class="form-control" name="current_password" required />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                  <label class="form-label" style="font-weight: 600;">Nova senha</label>
+                  <input type="password" class="form-control" name="new_password" required minlength="6" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 24px;">
+                  <label class="form-label" style="font-weight: 600;">Confirmar nova senha</label>
+                  <input type="password" class="form-control" name="confirm_new_password" required minlength="6" />
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                  <button type="submit" class="btn btn-primary" style="background-color: #16A34A; padding: 10px 24px; border-radius: 8px; font-weight: 700;">
+                    Salvar alterações
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             5. Tela: Meus Eventos - Organizador (Figma: Organizador.png Tela 1)
+             ==================================================================== -->
+        <section class="view-section hidden" id="view-meus-eventos">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h1 class="page-title" style="font-size: 26px; font-weight: 800; color: #0F172A;">Meus Eventos</h1>
+            <button class="btn btn-primary" onclick="window.adminModule.openCreateEventModal()" style="background-color: #16A34A; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+              <span>+</span> Criar Evento
+            </button>
+          </div>
+
+          <!-- Abas de Status com sublinhado verde exato do Figma -->
+          <div style="display: flex; gap: 32px; border-bottom: 1px solid #E2E8F0; margin-bottom: 24px;">
+            <button class="my-events-tab-btn active" data-tab="publicados" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 700; color: #16A34A; border-bottom: 2px solid #16A34A; cursor: pointer;">
+              Publicados
+            </button>
+            <button class="my-events-tab-btn" data-tab="ativos" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;">
+              Ativos
+            </button>
+            <button class="my-events-tab-btn" data-tab="encerrados" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;">
+              Encerrados
+            </button>
+            <button class="my-events-tab-btn" data-tab="cancelados" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;">
+              Cancelados
+            </button>
+            <button class="my-events-tab-btn" data-tab="rascunhos" style="background: transparent; border: none; padding: 8px 0; font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;">
+              Rascunhos
+            </button>
+          </div>
+
+          <!-- Tabela de Gestão de Eventos -->
+          <div class="table-wrapper" style="background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0; padding: 8px 16px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="font-weight: 700; color: #64748B;">Evento</th>
+                  <th style="font-weight: 700; color: #64748B;">Data</th>
+                  <th style="font-weight: 700; color: #64748B;">Status</th>
+                  <th style="font-weight: 700; color: #64748B;">Inscritos</th>
+                  <th style="font-weight: 700; color: #64748B;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="my-events-table-body"></tbody>
+            </table>
+            <div style="text-align: center; padding: 16px 0;">
+              <a href="javascript:void(0)" onclick="window.adminModule.renderMyEventsTable()" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+                Ver mais
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             6. Tela: Inscrições & Frequência - Organizador (Figma: Organizador.png Tela 4)
+             ==================================================================== -->
+        <section class="view-section hidden" id="view-gerenciar-inscricoes">
+          <!-- Card 1: Semana da Computação 2024 -->
+          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 28px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 style="font-size: 22px; font-weight: 800; color: #0F172A;">Inscritos - Semana da Computação 2024</h2>
+              <button class="btn-pill-black" onclick="window.adminModule.exportAttendeesExcel()">
+                <span>📥</span> Inserir certificado em PDF
+              </button>
+            </div>
+
+            <div style="margin-bottom: 16px; max-width: 440px;">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Pesquisar alunos..."
+                style="border-radius: 8px; background-color: #FFFFFF;"
+                oninput="window.adminModule.attendanceSearch = this.value; window.adminModule.renderAttendanceManagement('attendance-table-body-comp');"
+              />
+            </div>
+
+            <div class="table-wrapper" style="background: #FFFFFF; border-radius: 8px; border: 1px solid #E2E8F0;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="font-weight: 700; color: #0F172A;">Nome</th>
+                    <th style="font-weight: 700; color: #0F172A;">Turma</th>
+                    <th style="font-weight: 700; color: #0F172A;">Presença</th>
+                    <th style="font-weight: 700; color: #0F172A;">Certificado</th>
+                  </tr>
+                </thead>
+                <tbody id="attendance-table-body-comp"></tbody>
+              </table>
+              <div style="text-align: center; padding: 14px 0;">
+                <a href="javascript:void(0)" onclick="window.adminModule.renderAttendanceManagement()" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+                  Ver mais
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Workshop de IA -->
+          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 style="font-size: 22px; font-weight: 800; color: #0F172A;">Inscritos - Workshop de IA</h2>
+              <button class="btn-pill-black" onclick="window.showToast('Template de certificados configurado para este evento.', 'info')">
+                <span>📥</span> Inserir certificado em PDF
+              </button>
+            </div>
+            <div style="margin-bottom: 16px; max-width: 440px;">
+              <input type="text" class="form-control" placeholder="Pesquisar alunos..." style="border-radius: 8px; background-color: #FFFFFF;" />
+            </div>
+            <div style="text-align: center; padding: 32px; background: #FFFFFF; border-radius: 8px; border: 1px solid #E2E8F0; color: #64748B;">
+              Inscrições canceladas / nenhum aluno com frequência pendente.
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       Layout de Autenticação (Login, Cadastro, Recuperar Senha, Nova Senha)
+       Fiel às Telas do Figma
+       ======================================================================== -->
+  <div class="auth-wrapper hidden" id="auth-layout" style="min-height: 100vh; background-color: #F8FAFC; display: flex; align-items: center; justify-content: center; padding: 24px;">
+
+    <!-- ====================================================================
+         Tela 1: Login (Figma: Login - Todos.png)
+         ==================================================================== -->
+    <div class="auth-card-screen" id="auth-login" style="width: 100%; max-width: 960px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center;">
+      <!-- Lado Esquerdo: Marca Oficial IFCE Iventus -->
+      <div style="text-align: center; padding: 20px;">
+        <!-- Logo Grande IFCE Iventus -->
+        <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+            <!-- Ponto vermelho do i -->
+            <rect x="15" y="10" width="16" height="16" rx="3" fill="#DC2626" />
+            <!-- Corpo do i -->
+            <rect x="15" y="32" width="16" height="16" rx="3" fill="#16A34A" />
+            <rect x="15" y="54" width="16" height="16" rx="3" fill="#16A34A" />
+            <rect x="15" y="76" width="16" height="16" rx="3" fill="#16A34A" />
+            <!-- Letra V -->
+            <path d="M42 32 H54 L66 74 L78 32 H90 L74 88 H58 Z" fill="#16A34A" />
+          </svg>
+        </div>
+        <h1 style="font-size: 32px; font-weight: 800; color: #16A34A; margin-bottom: 8px;">IFCE Iventus</h1>
+        <p style="font-size: 14px; color: #64748B; max-width: 320px; margin: 0 auto; line-height: 1.5;">
+          Plataforma de gestão dos eventos científicos do IFCE
+        </p>
+      </div>
+
+      <!-- Lado Direito: Card Branco de Entrada -->
+      <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+        <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin-bottom: 24px;">Entrar na sua conta</h2>
+
+        <form id="form-auth-login">
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label" style="font-weight: 600;">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              name="identifier"
+              placeholder="seuemail@exemplo.com"
+              value="luiz.thomas@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 8px;">
+            <label class="form-label" style="font-weight: 600;">Senha</label>
+            <div style="position: relative;">
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="login-pass-input"
+                placeholder="••••••••"
+                value="alunoifce"
+                required
+              />
+              <button
+                type="button"
+                onclick="const el = document.getElementById('login-pass-input'); el.type = el.type === 'password' ? 'text' : 'password';"
+                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; color: #64748B;"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div style="text-align: right; margin-bottom: 20px;">
+            <a href="javascript:void(0)" onclick="window.navigateToView('recuperar-senha')" style="font-size: 12px; color: #64748B; text-decoration: none;">
+              Esqueceu sua senha?
+            </a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full" style="background-color: #16A34A; padding: 12px; font-size: 16px; font-weight: 700; border-radius: 8px;">
+            Entrar
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #64748B;">
+          Não tem uma conta?
+          <a href="javascript:void(0)" onclick="window.navigateToView('cadastro')" style="color: #16A34A; font-weight: 700; text-decoration: none;">
+            Cadastre-se
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 10px; font-size: 13px; color: #64748B;">
+          Esqueceu sua senha?
+          <a href="javascript:void(0)" onclick="window.navigateToView('recuperar-senha')" style="color: #16A34A; font-weight: 700; text-decoration: none;">
+            Recuperar senha
+          </a>
+        </div>
+
+        <!-- Atalhos rápidos para avaliação -->
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed #E2E8F0; text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; margin-bottom: 8px;">
+            Acesso Rápido para Teste
+          </div>
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.querySelector('#form-auth-login [name=identifier]').value='luiz.thomas@gmail.com'; document.querySelector('#form-auth-login [name=password]').value='alunoifce';" style="font-size: 11px;">
+              Participante (Luiz)
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.querySelector('#form-auth-login [name=identifier]').value='saulo_bezerra@gmail.com'; document.querySelector('#form-auth-login [name=password]').value='professor123';" style="font-size: 11px;">
+              Professor (Saulo)
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.querySelector('#form-auth-login [name=identifier]').value='admin@ifce.edu.br'; document.querySelector('#form-auth-login [name=password]').value='admin123';" style="font-size: 11px;">
+              Admin IFCE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         Tela 2: Cadastro (Figma: Cadastro - Todos.png)
+         ==================================================================== -->
+    <div class="auth-card-screen hidden" id="auth-cadastro" style="width: 100%; max-width: 540px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+      <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin-bottom: 24px;">Criar sua conta</h2>
+
+      <form id="form-auth-register">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-weight: 600;">Nome completo</label>
+          <input type="text" class="form-control" name="name" value="Luiz Thomas Marte Moreira" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-weight: 600;">E-mail</label>
+          <input type="email" class="form-control" name="email" value="luiz.thomas@gmail.com" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-weight: 600;">Perfil</label>
+          <select class="form-control" name="role" required>
+            <option value="participante" selected>Participante</option>
+            <option value="professor">Professor / Organizador</option>
+            <option value="administrador">Administrador</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label class="form-label" style="font-weight: 600;">Senha</label>
+            <input type="password" class="form-control" name="password" placeholder="••••••••" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-weight: 600;">Confirmar senha</label>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="••••••••" required minlength="6" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-checkbox-label" style="font-size: 13px; color: #475569; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" required checked />
+            <span>Li e aceito os <a href="javascript:void(0)" style="color: #16A34A; font-weight: 600;">Termos de Uso</a> e <a href="javascript:void(0)" style="color: #16A34A; font-weight: 600;">Política de Privacidade</a></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full" style="background-color: #16A34A; padding: 12px; font-size: 16px; font-weight: 700; border-radius: 8px;">
+          Cadastrar
+        </button>
+      </form>
+
+      <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #64748B;">
+        Já possui uma conta?
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')" style="color: #16A34A; font-weight: 700; text-decoration: none;">
+          Entrar
+        </a>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         Tela 3: Recuperar Senha (Figma: Recuperar Senha - Todos.png)
+         ==================================================================== -->
+    <div class="auth-card-screen hidden" id="auth-recuperar-senha" style="width: 100%; max-width: 480px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); text-align: center;">
+      <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin-bottom: 20px;">Recuperar senha</h2>
+
+      <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #F1F5F9; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;">
+        ✉️
+      </div>
+
+      <p style="font-size: 13px; color: #64748B; margin-bottom: 24px; line-height: 1.5;">
+        Digite seu e-mail para receber um link de recuperação de senha.
+      </p>
+
+      <form id="form-auth-recover" style="text-align: left;">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label" style="font-weight: 600;">E-mail</label>
+          <input type="email" class="form-control" name="email" placeholder="seuemail@exemplo.com" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full" style="background-color: #16A34A; padding: 12px; font-size: 16px; font-weight: 700; border-radius: 8px;">
+          Enviar link de recuperação
+        </button>
+      </form>
+
+      <div style="margin-top: 20px;">
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+          Voltar para o login
+        </a>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         Tela 4: Nova Senha (Figma: Nova Senha - Todos.png)
+         ==================================================================== -->
+    <div class="auth-card-screen hidden" id="auth-nova-senha" style="width: 100%; max-width: 480px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); text-align: center;">
+      <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin-bottom: 24px;">Criação da nova senha</h2>
+
+      <form id="form-auth-reset" style="text-align: left;">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-weight: 600;">Nova senha</label>
+          <input type="password" class="form-control" name="new_password" required minlength="6" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" style="font-weight: 600;">Confirmar nova senha</label>
+          <input type="password" class="form-control" name="confirm_password" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full" style="background-color: #16A34A; padding: 12px; font-size: 16px; font-weight: 700; border-radius: 8px;">
+          Pronto
+        </button>
+      </form>
+
+      <div style="margin-top: 20px;">
+        <a href="javascript:void(0)" onclick="window.navigateToView('login')" style="color: #16A34A; font-weight: 700; font-size: 13px; text-decoration: none;">
+          Voltar para o login
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================================================
+       MODAIS FIÉIS AO FIGMA
+       ======================================================================== -->
+
+  <!-- Modal 1: Visualizando Evento - Participante (Figma: Visualizando Evento - Participante.png) -->
+  <div class="modal-overlay" id="modal-event-details-figma" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 860px; background: #FFFFFF; border-radius: 16px; padding: 24px; position: relative;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin: 0;">Detalhes do Evento</h2>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" style="border-radius: 50%; width: 36px; height: 36px; font-size: 20px;">✕</button>
+      </div>
+
+      <div id="details-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Criando Evento (Figma: Organizador.png Tela 2 - Fundo Verde) -->
+  <div class="modal-overlay" id="modal-create-event-figma" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card-green" style="max-width: 860px; position: relative;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px 10px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin: 0;">Criando Evento</h2>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" style="border-radius: 50%; width: 36px; height: 36px; font-size: 20px; background: rgba(255,255,255,0.4);">✕</button>
+      </div>
+
+      <form id="form-create-event-figma" onsubmit="event.preventDefault(); window.adminModule.handleCreateEventSubmit();">
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 10px 24px 24px;">
+          <!-- Lado Esquerdo -->
+          <div>
+            <label class="form-label" style="font-weight: 700; margin-bottom: 8px; display: block;">Imagem do Evento</label>
+            <input type="file" id="create-banner-file-input" accept="image/*" style="display: none;" onchange="window.adminModule.handleBannerUpload(this.files[0], 'create-modal-preview-img')" />
+            <div class="modal-image-upload-box" onclick="document.getElementById('create-banner-file-input').click()" style="background: rgba(255,255,255,0.6); border: 2px dashed #475569; height: 210px; margin-bottom: 16px;">
+              <img src="/assets/images/event-comp.svg" alt="Preview" id="create-modal-preview-img" style="max-width: 100%; max-height: 120px; object-fit: contain; margin-bottom: 8px;" />
+              <span style="font-size: 24px; font-weight: 300;">+</span>
+              <span style="font-size: 13px; font-weight: 600; color: #1E293B;">Upload da imagem</span>
+            </div>
+
+            <div style="margin-bottom: 24px; text-align: center;">
+              <label class="form-label" style="font-weight: 700; margin-bottom: 8px; display: block;">Status do Evento</label>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button type="button" id="create-status-btn-ativo" onclick="window.adminModule.updateCreateStatusButtons('Ativo')" style="background-color: #16A34A; color: #FFFFFF; font-weight: 700; padding: 10px; border-radius: 8px; border: none; cursor: pointer;">
+                  Ativo
+                </button>
+                <button type="button" id="create-status-btn-rascunho" onclick="window.adminModule.updateCreateStatusButtons('Rascunho')" style="background-color: #475569; color: #FFFFFF; font-weight: 700; padding: 10px; border-radius: 8px; border: none; cursor: pointer;">
+                  Rascunho
+                </button>
+              </div>
+            </div>
+
+            <div style="text-align: center;">
+              <button type="submit" style="background-color: #FFFFFF; color: #0F172A; font-weight: 800; font-size: 16px; padding: 8px 36px; border-radius: 8px; border: 1px solid #CBD5E1; cursor: pointer;">
+                OK
+              </button>
+            </div>
+          </div>
+
+          <!-- Lado Direito -->
+          <div style="border-left: 1px solid rgba(0,0,0,0.15); padding-left: 28px;">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-weight: 700;">Nome do Evento</label>
+              <input type="text" class="form-control" name="title" placeholder="Como se chamará..." required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-weight: 700;">Local</label>
+              <input type="text" class="form-control" name="location" placeholder="Onde acontecerá..." required />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Data</label>
+                <input type="text" class="form-control" name="date" placeholder="Quando acontecerá..." required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Horário</label>
+                <input type="text" class="form-control" name="time" placeholder="Quando acontecerá..." />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 700;">Descrição do Evento</label>
+              <div class="rich-text-toolbar">
+                <button type="button" class="rich-text-btn">B</button>
+                <button type="button" class="rich-text-btn"><em>I</em></button>
+                <button type="button" class="rich-text-btn"><u>U</u></button>
+                <button type="button" class="rich-text-btn"><s>S</s></button>
+                <button type="button" class="rich-text-btn">&lt;&gt;</button>
+              </div>
+              <textarea class="form-control rich-textarea" name="description" rows="5" placeholder="Detalhes, objetivos e tópicos abordados..."></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Editando Evento (Figma: Organizador.png Tela 3 - Fundo Amarelo) -->
+  <div class="modal-overlay" id="modal-edit-event-figma" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card-yellow" style="max-width: 860px; position: relative;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px 10px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: #0F172A; margin: 0;">Editando Evento</h2>
+        <button class="modal-close-btn" onclick="window.closeAnyModal()" style="border-radius: 50%; width: 36px; height: 36px; font-size: 20px; background: rgba(0,0,0,0.08);">✕</button>
+      </div>
+
+      <form id="form-edit-event-figma" onsubmit="event.preventDefault(); window.adminModule.handleEditEventSubmit();">
+        <input type="hidden" name="id" />
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 10px 24px 24px;">
+          <!-- Lado Esquerdo -->
+          <div>
+            <label class="form-label" style="font-weight: 700; margin-bottom: 8px; display: block;">Imagem do Evento</label>
+            <input type="file" id="edit-banner-file-input" accept="image/*" style="display: none;" onchange="window.adminModule.handleBannerUpload(this.files[0], 'edit-modal-preview-img')" />
+            <div class="modal-image-upload-box" onclick="document.getElementById('edit-banner-file-input').click()" style="background: rgba(255,255,255,0.7); border: 2px dashed #475569; height: 210px; margin-bottom: 16px;">
+              <img src="/assets/images/event-comp.svg" alt="Preview" id="edit-modal-preview-img" style="max-width: 100%; max-height: 120px; object-fit: contain; margin-bottom: 8px;" />
+              <span style="font-size: 24px; font-weight: 300;">+</span>
+              <span style="font-size: 13px; font-weight: 600; color: #1E293B;">Upload da imagem</span>
+            </div>
+
+            <div style="margin-bottom: 20px; text-align: center;">
+              <label class="form-label" style="font-weight: 700; margin-bottom: 8px; display: block;">Status do Evento</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button type="button" id="edit-status-btn-publicado" onclick="window.adminModule.handleSetEventStatus('PUBLICADO')" style="background-color: #16A34A; color: #FFFFFF; font-weight: 700; padding: 9px 4px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;">
+                  ✓ Publicado
+                </button>
+                <button type="button" id="edit-status-btn-encerrado" onclick="window.adminModule.handleSetEventStatus('ENCERRADO')" style="background-color: #EA580C; color: #FFFFFF; font-weight: 700; padding: 9px 4px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;">
+                  Encerrar
+                </button>
+                <button type="button" id="edit-status-btn-cancelado" onclick="window.adminModule.handleSetEventStatus('CANCELADO')" style="background-color: #DC2626; color: #FFFFFF; font-weight: 700; padding: 9px 4px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;">
+                  Cancelar
+                </button>
+                <button type="button" id="edit-status-btn-rascunho" onclick="window.adminModule.handleSetEventStatus('RASCUNHO')" style="background-color: #64748B; color: #FFFFFF; font-weight: 700; padding: 9px 4px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;">
+                  Rascunho
+                </button>
+              </div>
+            </div>
+
+            <div style="text-align: center;">
+              <button type="submit" style="background-color: #FFFFFF; color: #0F172A; font-weight: 800; font-size: 16px; padding: 8px 36px; border-radius: 8px; border: 1px solid #CBD5E1; cursor: pointer;">
+                OK
+              </button>
+            </div>
+          </div>
+
+          <!-- Lado Direito -->
+          <div style="border-left: 1px solid rgba(0,0,0,0.15); padding-left: 28px;">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-weight: 700;">Nome do Evento</label>
+              <input type="text" class="form-control" name="title" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-weight: 700;">Local</label>
+              <input type="text" class="form-control" name="location" required />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Data</label>
+                <input type="text" class="form-control" name="date" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Horário</label>
+                <input type="text" class="form-control" name="time" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 700;">Descrição do Evento</label>
+              <div class="rich-text-toolbar">
+                <button type="button" class="rich-text-btn">B</button>
+                <button type="button" class="rich-text-btn"><em>I</em></button>
+                <button type="button" class="rich-text-btn"><u>U</u></button>
+                <button type="button" class="rich-text-btn"><s>S</s></button>
+                <button type="button" class="rich-text-btn">&lt;&gt;</button>
+              </div>
+              <textarea class="form-control rich-textarea" name="description" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Container de Notificações Toast -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Biblioteca para emissão de Certificados PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Script Principal Modular em ES Modules -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

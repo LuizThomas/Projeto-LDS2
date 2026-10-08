@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <rect width="400" height="200" fill="#0F172A" />
+  <circle cx="320" cy="80" r="90" fill="#0EA5E9" opacity="0.2" />
+  <!-- Microscope / Science Flask graphic -->
+  <g transform="translate(140, 30)">
+    <path d="M50 20 L50 60 L15 120 C10 130 18 140 30 140 L90 140 C102 140 110 130 105 120 L70 60 L70 20 Z" fill="#0284C7" opacity="0.8" stroke="#38BDF8" stroke-width="3" />
+    <path d="M26 122 L94 122 C98 128 92 135 84 135 L36 135 C28 135 22 128 26 122 Z" fill="#38BDF8" />
+    <circle cx="50" cy="105" r="6" fill="#BAE6FD" />
+    <circle cx="68" cy="95" r="4" fill="#BAE6FD" />
+    <circle cx="56" cy="80" r="5" fill="#BAE6FD" />
+  </g>
+  <text x="50" y="105" font-family="sans-serif" font-size="20" font-weight="700" fill="#38BDF8">Pesquisa</text>
+  <text x="50" y="130" font-family="sans-serif" font-size="14" fill="#94A3B8">&amp; Inovação</text>
+</svg>

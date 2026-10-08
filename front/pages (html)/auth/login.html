@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - IFCE Iventus</title>
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/auth/login.css">
+</head>
+<body class="login-body">
+  <div class="login-layout">
+    <div class="brand-section">
+      <div class="logo-wrapper">
+        <img src="../../assets/css/images/logo.svg" alt="Logo IFCE Iventus" class="brand-logo">
+        <h1>IFCE Iventus</h1>
+        <p>Plataforma de gestão dos eventos científicos do IFCE</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="auth-container">
+        <h2>Entrar na sua conta</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" class="form-control" placeholder="luiz.thomas@gmail.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Senha</label>
+            <div class="password-wrapper">
+              <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+              <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar senha">👁️</button>
+            </div>
+            <div class="forgot-link">
+              <a href="recuperar-senha.html">Esqueceu sua senha?</a>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Entrar</button>
+
+          <div class="auth-links text-center">
+            <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+            <p style="margin-top: 8px;"><a href="recuperar-senha.html">Recuperar senha</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/pages/auth/login.js"></script>
+</body>
+</html>

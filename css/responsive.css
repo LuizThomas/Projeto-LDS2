@@ -1,0 +1,176 @@
+/* ==========================================================================
+   IFCE Iventus - Responsive Styles
+   Mobile, Tablet e Adaptações de Interface
+   ========================================================================== */
+
+/* Mobile Sidebar Toggle Button (Hidden on Desktop) */
+.mobile-menu-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--color-text-main);
+  background: var(--color-bg-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobile-menu-btn:hover {
+  background: #E2E8F0;
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 35;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.sidebar-backdrop.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoints: Tablet e Telas Médias (<= 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .app-header {
+    padding: 0 var(--spacing-md);
+  }
+
+  .app-content {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .modal-event-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-image-upload-box {
+    min-height: 140px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoints: Mobile (<= 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .demo-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .demo-role-selector {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .demo-topbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Auth Split Card vira coluna única no mobile */
+  .auth-split-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .auth-brand-side {
+    padding: var(--spacing-xl);
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .auth-form-side {
+    padding: var(--spacing-xl);
+  }
+
+  .auth-single-card {
+    padding: var(--spacing-xl);
+  }
+
+  .form-row, .form-row-3 {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .header-search-container {
+    display: none; /* Em mobile muito estreito esconde busca fixa para dar espaço aos controles */
+  }
+
+  .user-profile-name {
+    display: none; /* Exibe apenas o avatar em telas pequenas */
+  }
+
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-avatar-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-card {
+    max-height: 96vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  .certificate-signatures {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Acessibilidade e Touch targets
+   -------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .btn, .nav-item, .form-control, .form-checkbox-label {
+    min-height: 44px;
+  }
+}

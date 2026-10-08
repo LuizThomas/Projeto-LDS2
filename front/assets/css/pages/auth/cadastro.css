@@ -1,0 +1,31 @@
+.cadastro-card {
+    max-width: 480px;
+  }
+  
+  .cadastro-card h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  
+  .checkbox-group a {
+    color: var(--primary-green);
+    text-decoration: underline;
+  }

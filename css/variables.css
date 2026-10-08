@@ -1,0 +1,102 @@
+/* ==========================================================================
+   IFCE Iventus - Design System Variables
+   Cores, Tipografia, Espaçamentos e Sombras fiéis ao layout do Figma
+   ========================================================================== */
+
+:root {
+  /* Paleta Primária - Verde Institucional IFCE */
+  --color-primary: #2E7D32;
+  --color-primary-hover: #1B5E20;
+  --color-primary-active: #144917;
+  --color-primary-light: #E8F5E9;
+  --color-primary-subtle: #F1F8F2;
+  --color-primary-rgb: 46, 125, 50;
+
+  /* Cores de Destaque e Acento */
+  --color-accent-red: #E53935;
+  --color-accent-red-hover: #C62828;
+  --color-accent-red-light: #FFEBEE;
+
+  /* Amarelo/Dourado (Cabeçalho de Edição do Figma) */
+  --color-edit-yellow: #FDE047;
+  --color-edit-yellow-dark: #CA8A04;
+  --color-edit-yellow-light: #FEF9C3;
+  --color-edit-yellow-header: #FACC15;
+
+  /* Status e Alertas */
+  --color-success: #16A34A;
+  --color-success-bg: #DCFCE7;
+  --color-success-text: #15803D;
+
+  --color-warning: #D97706;
+  --color-warning-bg: #FEF3C7;
+  --color-warning-text: #B45309;
+
+  --color-danger: #DC2626;
+  --color-danger-bg: #FEE2E2;
+  --color-danger-text: #B91C1C;
+
+  --color-info: #0284C7;
+  --color-info-bg: #E0F2FE;
+  --color-info-text: #0369A1;
+
+  /* Neutros e Superfícies */
+  --color-bg-app: #F8FAFC;
+  --color-bg-card: #FFFFFF;
+  --color-bg-muted: #F1F5F9;
+  --color-bg-input: #FFFFFF;
+
+  --color-text-main: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #E2E8F0;
+  --color-border-hover: #CBD5E1;
+  --color-border-focus: #2E7D32;
+
+  /* Tipografia */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Escala Tipográfica */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+
+  /* Espaçamentos */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem;  /* 8px */
+  --spacing-md: 1rem;    /* 16px */
+  --spacing-lg: 1.5rem;  /* 24px */
+  --spacing-xl: 2rem;    /* 32px */
+  --spacing-2xl: 3rem;   /* 48px */
+
+  /* Raio de Borda (Figma possui cantos suaves de 6px a 12px) */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+  /* Transições */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Dimensões do Layout */
+  --sidebar-width: 250px;
+  --header-height: 70px;
+  --modal-max-width: 820px;
+}

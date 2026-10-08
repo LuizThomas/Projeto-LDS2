@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="#2E7D32" />
+  <!-- Red square dot of the letter i (IFCE federal institute symbol) -->
+  <rect x="12" y="11" width="7" height="7" rx="1.5" fill="#E53935" />
+  <!-- Stem of the letter i -->
+  <rect x="12" y="21" width="7" height="16" rx="2" fill="#FFFFFF" />
+  <!-- Letter v -->
+  <path d="M22 21 H28.5 L32 31 L35.5 21 H42 L35.5 37 H28.5 Z" fill="#FFFFFF" />
+</svg>

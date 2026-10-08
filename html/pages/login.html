@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - IFCE Iventus</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-icon.svg" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body style="background-color: #F8FAFC;">
+
+  <div class="auth-wrapper">
+    <div class="auth-split-card">
+      <!-- Lado da Marca IFCE Iventus -->
+      <div class="auth-brand-side">
+        <div class="auth-brand-logo-large">
+          <img src="../assets/images/logo-icon.svg" alt="Ícone Iventus" class="auth-brand-icon-big" />
+          <div>
+            <h1 class="auth-brand-title">IFCE Iventus</h1>
+            <div class="auth-brand-subtitle">INSTITUTO FEDERAL DO CEARÁ</div>
+          </div>
+        </div>
+        <p style="margin-top: 24px; font-size: 13px; color: var(--color-text-secondary); max-width: 280px;">
+          Plataforma de gestão de eventos acadêmicos, controle de presença e emissão de certificados.
+        </p>
+      </div>
+
+      <!-- Formulário de Entrada -->
+      <div class="auth-form-side">
+        <div class="auth-header">
+          <h2 class="auth-title">Entrar na sua conta</h2>
+          <p class="auth-description">Acesse com suas credenciais institucionais</p>
+        </div>
+
+        <form id="standalone-login-form" onsubmit="event.preventDefault(); window.location.href='../index.html';">
+          <div class="form-group">
+            <label class="form-label form-label-required">E-mail Institucional ou CPF</label>
+            <input
+              type="text"
+              class="form-control"
+              name="identifier"
+              placeholder="ex: lais.holanda@aluno.ifce.edu.br"
+              value="lais.holanda@aluno.ifce.edu.br"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label form-label-required" style="margin-bottom: 0;">Senha</label>
+              <a href="recuperar-senha.html" style="font-size: 12px;">Esqueceu a senha?</a>
+            </div>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Digite sua senha"
+              value="123456"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-top: 12px;">
+            Entrar
+          </button>
+        </form>
+
+        <div class="auth-footer-links">
+          Não possui uma conta?
+          <a href="cadastro.html">Cadastre-se</a>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+          <a href="../index.html" class="btn btn-outline btn-sm">
+            ← Abrir Painel Completo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha - IFCE Iventus</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-icon.svg" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body style="background-color: #F8FAFC;">
+
+  <div class="auth-wrapper">
+    <div class="auth-single-card">
+      <div class="text-center" style="margin-bottom: 24px;">
+        <div class="auth-logo-badge" style="margin: 0 auto 16px;">🔑</div>
+        <h2 class="auth-title">Recuperar senha</h2>
+        <p class="auth-description">
+          Informe seu e-mail institucional para receber o link de redefinição de acesso.
+        </p>
+      </div>
+
+      <form onsubmit="event.preventDefault(); window.location.href='nova-senha.html';">
+        <div class="form-group">
+          <label class="form-label form-label-required">E-mail institucional</label>
+          <input type="email" class="form-control" name="email" placeholder="ex: lais.holanda@aluno.ifce.edu.br" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-top: 12px;">
+          Enviar link de recuperação
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <a href="login.html">← Voltar ao login</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

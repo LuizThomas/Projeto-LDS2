@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro - IFCE Iventus</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo-icon.svg" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body style="background-color: #F8FAFC;">
+
+  <div class="auth-wrapper">
+    <div class="auth-single-card">
+      <div class="text-center" style="margin-bottom: 20px;">
+        <img src="../assets/images/logo-icon.svg" alt="Logo" width="54" height="54" style="margin: 0 auto 12px;" />
+        <h2 class="auth-title">Criar sua conta</h2>
+        <p class="auth-description">Cadastre-se para participar dos eventos do IFCE</p>
+      </div>
+
+      <form onsubmit="event.preventDefault(); window.location.href='../index.html';">
+        <div class="form-group">
+          <label class="form-label form-label-required">Nome Completo</label>
+          <input type="text" class="form-control" name="name" placeholder="Seu nome completo" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label form-label-required">E-mail Institucional</label>
+            <input type="email" class="form-control" name="email" placeholder="nome@ifce.edu.br" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Matrícula / SIAPE</label>
+            <input type="text" class="form-control" name="matricula" placeholder="ex: 2024100123" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label-required">Tipo de Perfil</label>
+          <select class="form-control" name="role" required>
+            <option value="participante">Aluno / Participante Geral</option>
+            <option value="professor">Professor / Coordenador de Evento</option>
+            <option value="administrador">Administrador Geral</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label form-label-required">Senha</label>
+            <input type="password" class="form-control" name="password" placeholder="Mínimo 6 caracteres" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label class="form-label form-label-required">Confirmar senha</label>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Repita a senha" required minlength="6" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin: 12px 0;">
+          <label class="form-checkbox-label">
+            <input type="checkbox" class="form-checkbox" required checked />
+            <span>Li e concordo com os Termos de Uso e Política de Privacidade do IFCE</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg">
+          Cadastrar
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        Já possui uma conta?
+        <a href="login.html">Entrar</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
