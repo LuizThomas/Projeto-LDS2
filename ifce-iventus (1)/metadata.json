@@ -1,6 +1,0 @@
-{
-  "name": "IFCE Iventus",
-  "description": "Sistema de Gerenciamento de Eventos Científicos do IFCE com catálogo de eventos, controle de inscrições, moderação e emissão de certificados digitais autenticados.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
