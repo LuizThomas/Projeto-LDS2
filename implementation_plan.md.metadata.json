@@ -1,0 +1,6 @@
+{
+  "summary": "Plano de implementação para correção da identidade visual da logo na tela de login (apenas emblema IV sem repetição textual) e adição do fluxo completo de moderação e aprovação de usuários pelo Administrador, incluindo bloqueio de login para contas pendentes, tela de aviso após cadastro e painel dedicado de aprovação/recusa.",
+  "updatedAt": "2026-10-15T14:02:32.856640459Z",
+  "requestFeedback": true,
+  "userFacing": true
+}
